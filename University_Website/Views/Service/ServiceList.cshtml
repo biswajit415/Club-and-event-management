@@ -1,0 +1,88 @@
+﻿@model IEnumerable<University_Website.Models.ServiceDL>
+
+@{
+    ViewBag.Title = "ServiceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        .ServiceCard {
+            background-color:antiquewhite;
+            padding-top: 10px;
+            padding-bottom: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            border: 0.5px solid grey;
+        }
+
+        .action {
+            text-decoration: none;
+            color: white;
+        }
+
+            .action:hover {
+                text-decoration: none;
+            }
+    </style>
+</head>
+
+   
+<center><h2>SERVICES</h2></center>
+
+<center><p style="color:red;font-size:20px">@ViewBag.ServiceMsg</p></center>
+@if (Session["AdminId"] != null)
+{
+<center style="margin-bottom:10px">
+    <div class="btn btn-info  btn-sm" style="background-color:forestgreen;margin:2px;padding:15px;font-size:20px">
+
+        @Html.ActionLink("Add New Service", "CreateService", "Service", null, new { @class = "action" })
+
+    </div>
+</center>
+    }
+
+
+    @foreach (var item in Model)
+    {
+
+
+
+        <div class="ServiceCard">
+
+            <center><h2>@Html.DisplayFor(modelItem => item.ServiceName)</h2></center>
+            <center> @Html.DisplayFor(modelItem => item.ServiceDescription)</center>
+
+            <b>@Html.DisplayNameFor(model => model.Volunteer) Required:</b>  @Html.DisplayFor(modelItem => item.Volunteer)<br />
+
+
+            <center>
+                @if (Session["UserId"] != null)
+                {
+                    <div class="btn btn-info  btn-sm" style="background-color:forestgreen;margin:8px">
+                        @Html.ActionLink("Join", "ServiceJoin", "Service", new { ServiceID = @item.ServiceID, Slot = @item.Slots }, new { @class = "action" })
+                    </div>
+                    <div class="btn btn-info  btn-sm" style="background-color:red;margin:8px">
+                        @Html.ActionLink("Leave", "ServiceLeave", "Service", new { ServiceID = @item.ServiceID }, new { @class = "action" })
+                    </div>
+                    <div class="btn btn-info  btn-sm" style="background-color:blue;margin:8px">
+                        @Html.ActionLink("Members", "ServiceMembers", "Service", new { ServiceID = @item.ServiceID }, new { @class = "action" })
+                    </div>
+                }
+                @if (Session["AdminId"] != null)
+                {
+                    <div class="btn btn-info  btn-sm" style="background-color:blue;margin:8px">
+                        @Html.ActionLink("Update Service", "UpdateService", "Service", new { ServiceID = @item.ServiceID }, new { @class = "action" })
+                    </div>
+                    <div class="btn btn-info  btn-sm" style="background-color:forestgreen;margin:8px">
+                        @Html.ActionLink("Members", "ServiceMembers", "Service", new { ServiceID = @item.ServiceID }, new { @class = "action" })
+                    </div>
+                }
+            </center>
+        </div>
+
+
+    }
+
+    </table>

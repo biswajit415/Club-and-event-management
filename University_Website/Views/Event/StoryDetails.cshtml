@@ -1,0 +1,37 @@
+﻿@model University_Website.Models.ShareEventStoryDL
+
+@{
+    ViewBag.Title = "StoryDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    dt,dd {
+        margin-bottom:10px;
+        font-size:15px;
+    }
+</style>
+
+<center style="margin-top:10%"><h2>Story Details</h2></center>
+<div class="form-horizontal" style="margin-left:25%;margin-right:25%; border:3px dashed blue;padding:0px;background-color:lightgreen">
+
+    <hr />
+    <dl class="dl-horizontal" style="margin-left:20%">
+        <dt>
+            @Html.DisplayNameFor(model => model.EventName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventDescription)
+        </dd>
+
+    </dl>
+</div>
+

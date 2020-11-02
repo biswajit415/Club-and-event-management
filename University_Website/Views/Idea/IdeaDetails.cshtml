@@ -1,0 +1,71 @@
+﻿@model University_Website.Models.IdeaDL
+
+@{
+    ViewBag.Title = "IdeaDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    dt, dd {
+        margin-bottom: 10px;
+        font-size: 15px;
+    }
+</style>
+
+
+<center style="margin-top:10%"><h2>Idea Details</h2></center>
+<div class="form-horizontal" style="margin-left:25%;margin-right:20%; border:1px solid black;padding:0px;background-color:powderblue">
+
+    <hr />
+    <dl class="dl-horizontal" style="margin-left:20%">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdeaTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdeaTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdeaDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdeaDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostIdeaDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostIdeaDate)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClubName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClubName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+        <dt>
+            Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.FirstName)
+        </dd>
+
+    </dl>
+</div>
+

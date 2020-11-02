@@ -1,0 +1,34 @@
+﻿@model IEnumerable<University_Website.Models.UserOnEventActityDL>
+
+@{
+    ViewBag.Title = "Attenders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .table {
+        margin: 10px;
+    }
+</style>
+
+<center style="margin-top:10%"><h2>Attenders</h2></center>
+
+<table class="table .table-striped" style="border: 1px solid black">
+    <tr style="background-color:blue;color:white">
+        <th>
+            Attenders
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Users.FirstName)
+            </td>
+
+
+        </tr>
+    }
+
+</table>

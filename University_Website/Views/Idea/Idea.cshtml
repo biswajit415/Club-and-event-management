@@ -1,0 +1,83 @@
+﻿@model University_Website.Models.CreateAndViewIdea
+
+@{
+    ViewBag.Title = "Idea";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <style>
+         .IdeaInputbox, .Ideas {
+            padding-top: 10px;
+            padding-bottom: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            border: 0.5px solid grey;
+        }
+        .action {
+            text-decoration: none;
+            color: white;
+        }
+
+            .action:hover {
+                text-decoration: none;
+            }
+    </style>
+</head>
+<body>
+    <h2>Idea</h2>
+
+
+
+
+
+    <div class="IdeaInputbox">
+        @using (Html.BeginForm("AddIdea", "Idea", FormMethod.Post))
+        {
+
+
+            <div>
+                @Html.TextAreaFor(m => m.IdeaText, new { rows = "3", cols = "50", style = "width: 100%; max-width: 100%;" })
+            </div>
+
+            <input type="submit" value="Add Comment" />
+        }
+    </div>
+
+
+    <div>
+        @foreach (var li in Model.Ideas)
+        {
+        <div class="Ideas">
+            <h2>@Html.DisplayFor(modelItem => li.Users.FirstName) </h2>
+            <p>@Html.DisplayFor(modelItem => li.IdeaText)</p>
+
+
+            <div class="btn btn-info  btn-sm" style="background-color:forestgreen">
+                <span class="glyphicon glyphicon-arrow-up"></span>
+
+
+                @Html.ActionLink(" UpVote ", "UpVote", "Idea", new { IdeaID = @li.IdeaID }, new { @class = "action" }) @li.UpVoteCount
+            </div>
+            &nbsp;
+            <div class="btn btn-info  btn-sm" style="background-color:red">
+                <span class="glyphicon glyphicon-arrow-down"></span>
+
+
+                @Html.ActionLink(" DownVote ", "DownVote", "Idea", new { IdeaID = @li.IdeaID }, new { @class = "action" }) @li.DownVoteCount
+            </div>
+            &nbsp;
+            <div class="btn btn-info  btn-sm" style="background-color:blue;margin:2px">
+
+                @Html.ActionLink(" Share ", "IdeaShare", "Idea", new { IdeaID = li.IdeaID }, new { @class = "action" })
+
+            </div>
+        </div>
+       
+        }
+
+
+    </div>
+</body>

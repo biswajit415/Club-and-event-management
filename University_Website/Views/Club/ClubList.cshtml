@@ -1,0 +1,84 @@
+﻿@model IEnumerable<University_Website.Models.ClubDL>
+
+@{
+    ViewBag.Title = "ClubList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        .ClubCard {
+            padding-top: 10px;
+            padding-bottom: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            border: 0.5px solid grey;
+        }
+        .action {
+            text-decoration: none;
+            color: white;
+        }
+
+        .action:hover {
+            text-decoration: none;
+        }
+    </style>
+</head>
+ <center><h2>Club List</h2></center>
+
+
+
+    @foreach (var item in Model)
+    { 
+<div class="ClubCard">
+
+    <center><h2>@Html.DisplayFor(modelItem => item.ClubName)</h2></center>
+    <center> @Html.DisplayFor(modelItem => item.ClubDescription)</center>
+
+    <b>@Html.DisplayNameFor(model => model.Eligibility) Criteria:</b>@Html.DisplayFor(modelItem => item.Eligibility)<br/>
+
+
+<center>
+    @if (Session["UserId"] != null)
+    {
+        <div class="btn btn-info  btn-sm" style="background-color:forestgreen;margin:8px">
+            @Html.ActionLink("Join", "ClubJoin", "Club", new { ClubID = @item.ClubID }, new { @class = "action" })
+        </div>
+        <div class="btn btn-info  btn-sm" style="background-color:red;margin:8px">
+            @Html.ActionLink("Leave", "ClubLeave", "Club", new { ClubID = @item.ClubID }, new { @class = "action" })
+        </div>
+        <div class="btn btn-info  btn-sm" style="background-color:blue;margin:8px">
+            @Html.ActionLink("Members", "ClubMembers", "Club", new { ClubID = @item.ClubID }, new { @class = "action" })
+        </div>
+    }
+    @if (Session["AdminId"] != null)
+    {
+        <div class="btn btn-info  btn-sm" style="background-color:blue;margin:8px">
+            @Html.ActionLink("Update", "UpdateClubDetails", "Club", new { ClubID = @item.ClubID }, new { @class = "action" })
+        </div>
+        <div class="btn btn-info  btn-sm" style="background-color:forestgreen;margin:8px">
+            @Html.ActionLink("Members", "ClubMembers", "Club", new { ClubID = @item.ClubID }, new { @class = "action" })
+        </div>
+    }
+</center>
+</div>
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

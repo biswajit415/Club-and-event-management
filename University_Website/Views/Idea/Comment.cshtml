@@ -1,0 +1,69 @@
+﻿@model University_Website.Models.IdeaComment
+
+@{
+    ViewBag.Title = "Comment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        .EventCard, .CommentInputbox, .Comments {
+            padding-top: 10px;
+            padding-bottom: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            border: 0.5px solid grey;
+        }
+    </style>
+</head>
+<body>
+   <center><h2>Comment</h2></center>     
+
+    <div class="EventCard">
+        <center><h1>@Html.DisplayFor(modelItem => modelItem.Idea.IdeaTitle)</h1></center>
+        <center>
+            <p>@Html.DisplayFor(modelItem => modelItem.Idea.IdeaDescription)</p>
+        </center>
+        <br />
+        <div>
+            <div>
+                <b>Category </b>
+                <p style="display:inline">@Html.DisplayFor(modelItem => modelItem.Idea.Category)</p>
+            </div>
+
+            <div>
+                <b>Club Name</b>
+                <p style="display:inline">@Html.DisplayFor(modelItem => modelItem.Idea.ClubName)</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="CommentInputbox">
+        @using (Html.BeginForm("AddComment", "Idea", FormMethod.Post))
+        {
+
+            @Html.HiddenFor(Model => Model.IdeaID)
+            <div>
+                @Html.TextAreaFor(m => m.Comment, new { rows = "3", cols = "50", style = "width: 100%; max-width: 100%;" })
+            </div>
+
+            <input type="submit" value="Add Comment" />
+        }
+    </div>
+
+
+    <div>
+        @foreach (var li in Model.CommentOnIdeas)
+        {
+            <div class="Comments">
+                <h2>@Html.DisplayFor(modelItem => li.Name) </h2>
+                <p>@Html.DisplayFor(modelItem => li.Comment)</p>
+            </div>
+        }
+
+
+    </div>
+
+</body>

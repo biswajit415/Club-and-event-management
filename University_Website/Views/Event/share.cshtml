@@ -1,0 +1,20 @@
+﻿@model University_Website.Models.UserList
+
+@{
+    ViewBag.Title = "share";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>share</h2>
+
+@using (Html.BeginForm("Share", "Event", FormMethod.Post))
+{
+    <div>
+
+    </div>
+   <div class = "col-md-offset-2 col-md-10"><input type = "submit"
+    value="SHARE"
+    class="btn btn-default" /></div>
+}
+
+

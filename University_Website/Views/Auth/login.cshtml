@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    table {
+        margin-top:2px;
+        border-collapse: collapse;
+        background-color:lightgrey;
+        border: 1.5px solid blue;
+    }
+    td,tr{
+        padding:20px;
+        font-size:25px;
+   
+    }
+
+</style>
+
+
+<hr />
+<br />
+<center>
+    @if (ViewBag.Message != null)
+    {
+        <b class="text text-danger">
+            @ViewBag.Message
+        </b>
+    }
+    <center><h2>Login</h2></center>
+    <br />
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <table >
+            <tr>
+                <td style="text-align:center" >
+                    <b>Choose Login Type</b>
+                </td>
+                <td style="text-align:left;">
+
+                    @Html.DropDownList("UserRole", new List<SelectListItem>
+          {
+                   new SelectListItem{Text="Admin Login",Value="Admin"},
+                   new SelectListItem{Text="User Login",Value="User"}
+               }, "Select Role...", new {  @class= "btn btn-primary dropdown-toggle btn-lg ", type="button"})
+
+
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+     
+                <td>
+                    <button type="submit" name="btnSubmit" class="btn btn-primary btn-lg" style="right:50px">Select</button>
+                </td>
+                  
+            </tr>
+        </table>
+    }
+</center>

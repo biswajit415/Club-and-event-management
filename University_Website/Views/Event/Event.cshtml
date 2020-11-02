@@ -1,0 +1,234 @@
+﻿@model IEnumerable<University_Website.Models.EventDL>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+
+
+<head>
+    <style>
+        th, td {
+            padding-right: 30px
+        }
+
+        .EventCard {
+            background-color: #e9f7ef;
+            padding-top: 10px;
+            padding-bottom: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            border: 0.5px solid grey;
+        }
+        .action {
+            text-decoration:none;
+            color:white;
+        }
+        .action:hover{
+            text-decoration:none;
+        }
+    </style>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+
+
+
+<div>
+    <center><h1 style="margin:30px"> Event Calender </h1></center>
+    <section>
+
+        <center>
+            <table>
+                <tr>
+                    <th style="font-size:20px">Search Event By Id</th>
+                    <th></th>
+                    <th style="font-size:20px">Search  Event  By Date</th>
+                </tr>
+                <tr>
+                    <td>
+
+                        @using (Html.BeginForm("SerchById", "Event", FormMethod.Get))
+                        {
+
+                            @Html.TextBox("search", "", new { style = "margin-right:2px" })
+                            <input type="submit" value="Search" style="margin:10px;background-color:darkblue;color:white" />
+
+
+                        }
+
+                    </td>
+
+                    <td></td>
+                    <td>
+                        @using (Html.BeginForm("SerchByDate", "Event", FormMethod.Get))
+                        {
+
+                            @Html.TextBox("startDate", "", new { type = "date", placeholder = "Start Date", style = "margin-right:2px" })
+
+
+                            @Html.TextBox("endDate", "", new { type = "date", placeholder = "End Date", style = "margin-right:2px" })
+                            <input type="submit" value="Search" style="margin:10px;background-color:darkblue;color:white" />
+
+                        }
+                    </td>
+                    @if (Session["AdminId"] != null)
+                    {
+                        <td>
+                            <div class="btn btn-info  btn-sm" style="background-color:forestgreen;margin:2px">
+
+                                @Html.ActionLink("Create New Event", "CreateEvent", "Event", null, new { @class = "action" })
+
+                            </div>
+                        </td>
+                    }
+                </tr>
+                <tr>
+                    <td><p style="color:red">@ViewBag.SearchByIdValidationMsg</p></td>
+                    <td></td>
+                    <td><p style="color:red">@ViewBag.SearchValidationMsg</p></td>
+                </tr>
+            </table>
+        </center>
+    </section>
+    <center>
+        <p style="color:red;font-size:20px">@ViewBag.Massege</p>
+        <p style="color:red;font-size:20px">@ViewBag.ErrMsg</p>
+    </center> 
+    <section style="padding-top:40px">
+         <center><h1 style="color:red">@ViewBag.NotFoud</h1></center>
+        @foreach (var item in Model)
+        {
+
+    <div class="EventCard">
+
+        @{
+            DateTime today = DateTime.Parse(DateTime.Today.ToString("yyyy-MM-dd H:mm:ss"));
+           
+               if (item.EndDate < today)
+            {
+                <p style="color:red">Event Finished!!!</p>
+            }
+
+        }
+
+
+        <center><h1>@Html.DisplayFor(modelItem => item.EventName)</h1></center>
+        <center>
+            <p>@Html.DisplayFor(modelItem => item.EventDescription)</p>
+        </center>
+        <br />
+        <section>
+            <div>
+                <div>
+                    <b>StartDate </b>
+                    <p style="display:inline">@Html.DisplayFor(modelItem => item.StartDate) </p>
+                </div>
+
+                <div>
+                    <b>End Date  </b>
+                    <p style="display:inline">@Html.DisplayFor(modelItem => item.EndDate) </p>
+                </div>
+
+
+                <div>
+                    <b>Category  </b>
+                    <p style="display:inline">@Html.DisplayFor(modelItem => item.Category) </p>
+                </div>
+                <div style="right:10px">
+                    <b>CLub: </b>
+                    <p style="display:inline">@Html.DisplayFor(modelItem => item.ClubName) </p>
+                </div>
+                <div style="right:10px">
+                    <b>Event Id: </b>
+                    <p style="display:inline">@Html.DisplayFor(modelItem => item.EventID) </p>
+                </div>
+
+            </div>
+        </section>
+        <div>
+
+            @if (Session["UserId"] != null)
+            {
+                <div class="btn btn-info  btn-sm" style="background-color:forestgreen;margin:2px">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+
+                    @Html.ActionLink(" Like ", "Like", "Event", new { EventID = @item.EventID }, new { @class = "action" }) @item.LikeCount
+
+                </div>
+
+                <div class="btn btn-info  btn-sm" style="background-color:red;margin:2px">
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                    @Html.ActionLink(" Dislike ", "DisLike", "Event", new { EventID = @item.EventID }, new { @class = "action" }) @item.DisLikeCount
+                </div>
+
+                <div class="btn btn-info  btn-sm" style="background-color:cornflowerblue;margin:2px">
+
+                    @Html.ActionLink(" Interested ", "Interest", "Event", new { EventID = @item.EventID }, new { @class = "action" })
+                </div>
+
+                <div class="btn btn-info  btn-sm" style="background-color:brown;margin:2px">
+                    @Html.ActionLink(" Not Interested ", "NotInterest", "Event", new { EventID = @item.EventID }, new { @class = "action" })
+                </div>
+
+                <div class="btn btn-info  btn-sm" style="background-color:darkblue;float:right;margin:2px">
+
+                    @Html.ActionLink("Comment", "Comment", "Event", new { EventID = @item.EventID }, new { @class = "action" })
+
+                </div>
+
+                <div class="btn btn-info  btn-sm" style="background-color:blue;float:right;margin:2px">
+
+                    @Html.ActionLink(" Share ", "EventShare", "Event", new { EventID = @item.EventID }, new { @class = "action" })
+
+                </div>
+
+                <div class="btn btn-info  btn-sm" style="background-color:forestgreen;float:right;margin:2px">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    @Html.ActionLink("Attendence", "Attendence", "Event", new { EventID = @item.EventID }, new { @class = "action" })
+
+                </div>
+                <div class="btn btn-info  btn-sm" style="background-color:green;float:right;margin:2px">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    @Html.ActionLink("Attenders", "Attenders", "Event", new { EventID = @item.EventID }, new { @class = "action" })
+
+                </div>
+
+            }
+            @if (Session["AdminId"] != null)
+            {
+
+                <div class="btn btn-info  btn-sm" style="background-color:red;margin:2px">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    @Html.ActionLink("Delete", "DeleteEvent", "Event", new { EventID = @item.EventID }, new { @class = "action" })
+
+                </div>
+                <div class="btn btn-info  btn-sm" style="background-color:darkblue;float:right;margin:2px">
+
+                    @Html.ActionLink("Comment", "Comment", "Event", new { EventID = @item.EventID }, new { @class = "action" })
+
+                </div>
+
+                <div class="btn btn-info  btn-sm" style="background-color:green;float:right;margin:2px">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    @Html.ActionLink("Attenders", "Attenders", "Event", new { EventID = @item.EventID }, new { @class = "action" })
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+        }
+
+    </section>
+
+</div>
+

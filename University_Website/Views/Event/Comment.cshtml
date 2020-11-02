@@ -1,0 +1,73 @@
+﻿@model University_Website.Models.EventComment
+
+
+@{
+    ViewBag.Title = "Comment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        .EventCard, .CommentInputbox, .Comments {
+            padding-top: 10px;
+            padding-bottom: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            border: 0.5px solid grey;
+        }
+    </style>
+</head>
+<body>
+ <center> <h2>Comment</h2> </center>   
+
+
+        <div class="EventCard">
+            <center><h1>@Html.DisplayFor(modelItem => modelItem.Event.EventName)</h1></center>
+            <center>
+                <p>@Html.DisplayFor(modelItem => modelItem.Event.EventDescription)</p>
+            </center>
+            <br />
+            <div>
+                <div>
+                    <b>StartDate </b>
+                    <p style="display:inline">@Html.DisplayFor(modelItem => modelItem.Event.StartDate) </p>
+                </div>
+
+                <div>
+                    <b>End Date  </b>
+                    <p style="display:inline">@Html.DisplayFor(modelItem => modelItem.Event.EndDate) </p>
+                </div>
+
+            </div>
+        </div>
+    
+ 
+       @if (Session["UserId"]!= null)
+       {
+        <div class="CommentInputbox">
+            @using (Html.BeginForm("AddComment", "Event", FormMethod.Post))
+            {
+
+                @Html.HiddenFor(Model => Model.EventID)
+                   <div>
+                       @Html.TextAreaFor(m => m.Comment, new { rows = "3", cols = "50", style = "width: 100%; max-width: 100%;" })
+                   </div>
+
+                <input type="submit" value="Add Comment" />
+            }
+        </div>
+
+       }
+        <div>
+            @foreach (var li in Model.PostComments)
+            {
+                <div class="Comments">
+                    <h2>@Html.DisplayFor(modelItem => li.Name) </h2>
+                    <p>@Html.DisplayFor(modelItem => li.Comment)</p>
+                </div>
+            }
+
+
+        </div>
+</body>

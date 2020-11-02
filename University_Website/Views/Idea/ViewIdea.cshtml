@@ -1,0 +1,169 @@
+﻿@model IEnumerable<University_Website.Models.IdeaDL>
+
+@{
+    ViewBag.Title = "ViewIdea";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        th, td {
+            padding-right: 30px
+        }
+
+        .EventCard {
+            background-color:lightgrey;
+            padding-top: 10px;
+            padding-bottom: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            border: 0.5px solid grey;
+        }
+
+        .action {
+            text-decoration: none;
+            color: white;
+        }
+
+            .action:hover {
+                text-decoration: none;
+            }
+    </style>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+
+<div>
+    <center><h2>IDEA</h2></center>
+
+    <section>
+
+        <center>
+            <table>
+                <tr>
+                    <th style="font-size:20px">Search Idea By Title</th>
+                    <th></th>
+                    <th style="font-size:20px">Search  Idea  By Category</th>
+                </tr>
+                <tr>
+                    <td>
+
+                        @using (Html.BeginForm("SerchByTitle", "Idea", FormMethod.Get))
+                        {
+
+                            @Html.TextBox("search1")<input type="submit" value="Search"  style="margin:10px;background-color:darkblue;color:white"/>
+
+
+                        }
+
+                    </td>
+
+                    <td></td>
+                    <td>
+
+                        @using (Html.BeginForm("SerchByCategory", "Idea", FormMethod.Get))
+                        {
+
+                            @Html.TextBox("search2")<input type="submit" value="Search" style="margin:10px;background-color:darkblue;color:white" />
+
+
+                        }
+
+                    </td>
+                </tr>
+                <tr>
+                    <td><p style="color:red">@ViewBag.SearchByTitleValidationMsg</p></td>
+                    <td></td>
+                    <td><p style="color:red">@ViewBag.SearchByCategoryValidationMsg</p></td>
+                </tr>
+            </table>
+        </center>
+    </section>
+
+    <section style="padding-top:40px">
+        <center><h1 style="color:red">@ViewBag.NotFoud</h1></center>
+        @foreach (var item in Model)
+        {
+
+            
+
+            <div class="EventCard">
+                <center><h1>@Html.DisplayFor(modelItem => item.IdeaTitle)</h1></center>
+                <center>
+                    <p>@Html.DisplayFor(modelItem => item.IdeaDescription)</p>
+                </center>
+                <br />
+                <div>
+                    <b>Category </b>
+                    <p style="display:inline">@Html.DisplayFor(modelItem => item.Category)</p>
+                </div>
+                <div>
+                    <b>Post By </b>
+                    <p style="display:inline">@Html.DisplayFor(modelItem => item.Users.FirstName)</p>
+                </div>
+                <div>
+                    <div>
+                        <b>Club </b>
+                        <p style="display:inline">@Html.DisplayFor(modelItem => item.ClubName)</p>
+                    </div>
+                </div>
+               <div>
+                    <div>
+                        <b>Approve Status :</b>
+                        <p style="display:inline">@Html.DisplayFor(modelItem => item.Approve)</p>
+                    </div>
+                </div>
+
+                <div>
+                    @if (Session["AdminId"] != null)
+                    {
+                        <div class="btn btn-info  btn-sm" style="background-color:red;margin:4px">
+
+                            @Html.ActionLink(" Reject ", "IdeaReject", "Idea", new { IdeaID = @item.IdeaID }, new { @class = "action" })
+                        </div>
+                        <div class="btn btn-info  btn-sm" style="background-color:forestgreen;margin:4px">
+
+                            @Html.ActionLink(" Accept ", "IdeaAccepet", "Idea", new { IdeaID = @item.IdeaID }, new { @class = "action" })
+                        </div>
+
+                    }
+
+
+                    @if (Session["UserId"] != null)
+                    {
+
+                   <div class="btn btn-info  btn-sm" style="background-color:forestgreen; margin:4px" >
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                    @Html.ActionLink(" UpVote ", "UpVote", "Idea", new { IdeaID = @item.IdeaID }, new { @class = "action" }) @item.UpVoteCount
+                   </div>
+                       
+                        <div class="btn btn-info  btn-sm" style="background-color:red; margin:4px" >
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+
+
+                            @Html.ActionLink(" DownVote ", "DownVote", "Idea", new { IdeaID = @item.IdeaID }, new { @class = "action" }) @item.DownVoteCount
+                        </div>
+                     
+                    <div class="btn btn-info  btn-sm" style="background-color:blue;margin:4px">
+
+                        @Html.ActionLink(" Share ", "IdeaShare", "Idea", new { IdeaID = @item.IdeaID }, new { @class = "action" })
+
+                    </div>
+                       
+                    <div class="btn btn-info  btn-sm" style="background-color:darkblue;margin:4px">
+
+                        @Html.ActionLink("Comment", "Comment", "Idea", new { IdeaID = @item.IdeaID }, new { @class = "action" })
+
+                    </div>
+                    }
+
+                </div>
+
+            </div>
+        }
+
+    </section>
+</div>

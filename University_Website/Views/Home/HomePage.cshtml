@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+  <style>
+      .action {
+          text-decoration: none;
+          color: white;
+      }
+
+          .action:hover {
+              text-decoration: none;
+          }
+  </style>
+</head>
+<body>
+    <center><h2>Choose the options</h2></center>
+    <Center>
+        <div>
+            @if (Session["AdminId"] == null)
+            {
+                <div class="btn btn-info btn-lg" style="background-color:blue;margin:2px;color:white;text-decoration:none">
+
+                    @Html.ActionLink(" Submit Idea ", "AddIdea", "Idea", null, new { @class = "action", color = "white" })
+
+                </div>
+                <div class="btn btn-info btn-lg" style="background-color:blue;margin:2px;color:white;text-decoration:none">
+
+                    @Html.ActionLink(" View Idea ", "ViewIdea", "Idea", null, new { @class = "action", color = "white" })
+
+                </div>
+            }
+            <div class="btn btn-info btn-lg" style="background-color:blue;margin:2px;color:white;text-decoration:none">
+
+                @Html.ActionLink(" View All Ideas ", "ViewAllIdea", "Idea", null, new { @class = "action", color = "white" })
+
+            </div>
+            <div class="btn btn-info btn-lg" style="background-color:blue;margin:2px;color:white;text-decoration:none">
+
+                @Html.ActionLink(" View Events ", "Event", "Event", null, new { @class = "action", color = "white" })
+
+            </div>
+            <div class="btn btn-info btn-lg" style="background-color:blue;margin:2px;color:white;text-decoration:none">
+
+                @Html.ActionLink(" Clubs ", "ClubList", "Club", null, new { @class = "action", color = "white" })
+
+            </div>
+        </div>
+
+    </Center>
+
+    <center>
+        <h2>Welcome To University Website</h2>
+    </center>
+</body>

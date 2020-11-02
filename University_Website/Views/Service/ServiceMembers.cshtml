@@ -1,0 +1,49 @@
+﻿@model IEnumerable<University_Website.Models.ServiceJoinerDL>
+
+@{
+    ViewBag.Title = "ServiceMembers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table{
+        margin:10px;
+    }
+    
+</style>
+
+<center style="margin-top:10%"><h2>Service Members</h2></center>
+
+
+<div>
+    <table class="table .table-striped" style="border: 1px solid black">
+        <tr style="background-color:blue;color:white">
+            <th>
+                @Html.DisplayNameFor(model => model.Slot)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserID)
+            </th>
+            <th>
+                Name
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slot)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Users.FirstName)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>

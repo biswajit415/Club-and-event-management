@@ -1,0 +1,90 @@
+﻿@model  University_Website.Models.NotificationDL
+@{
+    ViewBag.Title = "Notification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        font-size: 20px;
+        padding: 16px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f9;
+    }
+    .action {
+        text-decoration: none;
+        color: white;
+    }
+
+        .action:hover {
+            text-decoration: none;
+        }
+
+</style>
+
+<center style="margin-top:10%"><h2>NOTIFICATION</h2></center>
+<table class="table table-striped table-hover" >
+   
+
+    @foreach (var item in Model.ShareEvents)
+    {
+        <tr>
+            <td>
+                <p>@item.Events.EventName Event is shared by @item.Users.FirstName </p>
+
+            </td>
+            <td>
+                <div class="btn btn-info  btn-sm">
+                    @Html.ActionLink("Details", "EventDetails", "Event", new { EventID = @item.EventID }, new { @class = "action" })
+                    </div>
+            </td>
+
+        </tr>
+    }
+
+    @foreach (var item in Model.ShareIdeas)
+    {
+        <tr>
+            <td>
+                <p>@item.Ideas.IdeaTitle Idea  is shared by @item.Users.FirstName </p>
+
+            </td>
+            <td>
+
+                <div class="btn btn-info  btn-sm">
+
+                    @Html.ActionLink("Details", "IdeaDetails", "Idea", new { IdeaID = @item.IdeaID }, new { @class = "action" })
+                </div>
+            </td>
+
+        </tr>
+    }
+
+
+    @foreach (var item in Model.ShareEventStories)
+    {
+        <tr>
+            <td>
+                <p>@item.EventName Event Story  is shared by admin </p>
+
+            </td>
+            <td>
+                <div class="btn btn-info  btn-sm">
+                    @Html.ActionLink("Details", "StoryDetails", "Event", new { ShareEventStoryID = @item.ShareEventStoryID }, new { @class = "action" })
+                </div>
+            </td>
+
+        </tr>
+    }
+
+
+</table>

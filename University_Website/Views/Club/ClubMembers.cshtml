@@ -1,0 +1,56 @@
+﻿@model IEnumerable<University_Website.Models.ClubMemberDL>
+
+@{
+    ViewBag.Title = "ClubMembers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table {
+        margin: 10px;
+    }
+</style>
+
+<center style="margin-top:10%"><h2>Club Members</h2></center>
+
+
+<table class="table .table-striped" style="border: 1px solid black">
+    <tr style="background-color:blue;color:white">
+        <th>
+            Name
+        </th>
+        <th>
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Designation)
+        </th>
+        @if (Session["AdminId"] != null)
+        {
+            <th>
+                Action
+            </th>
+        }
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Users.FirstName)
+            </td>
+            <td>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Designation)
+            </td>
+            <td>
+                @if (Session["AdminId"] != null)
+                {
+                    @Html.ActionLink("Remove Member", "ClubMemberRemove", "Club", new { ClubID = @item.ClubID, UserID = @item.UserID }, new { @class = "action" })
+                }
+            </td>
+
+        </tr>
+    }
+
+</table>

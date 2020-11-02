@@ -1,0 +1,43 @@
+﻿@model University_Website.Models.ClubMemberDL
+
+@{
+    ViewBag.Title = "ClubJoin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<center style="margin-top:10%"><h2>Club Join</h2></center>
+<center><p style="color:red;font-size:17px">@ViewBag.ClubJoinMsg</p></center>
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal" style="margin-left:25%;margin-right:20%; border:1px solid black;padding:0px;background-color:powderblue">
+
+
+    <hr />
+
+    <div class="form-group" style="margin-left:10%">
+        @Html.LabelFor(model => model.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group" style="margin-left:10%">
+        @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Designation, new SelectList(@ViewBag.list), "Select Designation...", new { @class = "btn btn-primary dropdown-toggle btn-lg ", type = "button" })
+            @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group" style="margin-left:10%">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="JOIN" class="btn btn-default btn-success" />
+        </div>
+    </div>
+</div>
+
+
+}
+
